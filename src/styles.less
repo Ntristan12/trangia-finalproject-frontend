@@ -1,0 +1,379 @@
+/* Global Styles — Spotify Premium Dark Theme */
+:root {
+  --spotify-green:        #1DB954;
+  --spotify-green-hover:  #1ED760;
+  --spotify-green-glow:   rgba(29, 185, 84, 0.35);
+  --spotify-green-subtle: rgba(29, 185, 84, 0.12);
+
+  --bg-base:     #000000;
+  --bg-dark:     #121212;
+  --bg-elevated: #1A1A1A;
+  --bg-card:     #181818;
+  --bg-raised:   #282828;
+  --bg-hover:    #2A2A2A;
+
+  --text-main:       #FFFFFF;
+  --text-secondary:  #B3B3B3;
+  --text-muted:      #6A6A6A;
+  --text-on-green:   #000000;
+
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-color:   #535353;
+  --border-focus:   #FFFFFF;
+
+  --error-red:      #E91429;
+  --error-glow:     rgba(233, 20, 41, 0.35);
+
+  --radius-pill: 500px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+
+  --transition: all 0.2s ease;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes floatBackground {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+body {
+  font-family: 'Circular Std', 'DM Sans', 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  animation: floatBackground 40s ease-in-out infinite;
+}
+
+.app-container {
+  min-height: 320px;
+}
+
+/* ── Navigation ─────────────────────────────────────────── */
+.admin-nav {
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: var(--bg-base) !important;
+  border-bottom: 1px solid var(--bg-elevated) !important;
+}
+
+.admin-nav .nav-link {
+  color: var(--text-secondary) !important;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  padding: 10px 14px;
+  position: relative;
+  transition: var(--transition);
+}
+
+.admin-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 3px;
+  background: var(--spotify-green);
+  border-radius: 3px 3px 0 0;
+  transition: width 0.2s ease;
+}
+
+.admin-nav .nav-link:hover,
+.admin-nav .nav-link.active {
+  color: var(--text-main) !important;
+}
+
+.admin-nav .nav-link.active::after {
+  width: 20px;
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn-spotify-primary {
+  background-color: var(--spotify-green);
+  color: var(--text-on-green);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 14px 32px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.8px;
+  width: 100%;
+  transition: var(--transition);
+}
+
+.btn-spotify-primary:hover {
+  background-color: var(--spotify-green-hover);
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px var(--spotify-green-glow);
+  color: var(--text-on-green);
+}
+
+.btn-spotify-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-spotify-primary:disabled {
+  background-color: var(--bg-raised);
+  color: var(--text-muted);
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-spotify-outline {
+  background-color: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  padding: 12px 32px;
+  font-weight: 700;
+  font-size: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+.btn-spotify-outline:hover {
+  border-color: var(--border-focus);
+  transform: scale(1.02);
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.08);
+}
+
+.btn-link {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-link:hover {
+  color: var(--spotify-green);
+}
+
+/* ── Forms ──────────────────────────────────────────────── */
+.form-label {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  color: var(--text-main);
+  text-transform: uppercase;
+}
+
+.form-control,
+.form-select {
+  background-color: var(--bg-elevated) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-size: 15px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--spotify-green) !important;
+  box-shadow: 0 0 0 3px var(--spotify-green-subtle) !important;
+  outline: none;
+  background-color: var(--bg-raised) !important;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: var(--error-red) !important;
+}
+
+.form-control.is-invalid:focus,
+.form-select.is-invalid:focus {
+  box-shadow: 0 0 0 3px var(--error-glow) !important;
+}
+
+/* ── Input Groups ───────────────────────────────────────── */
+.input-group-text {
+  background-color: var(--bg-elevated) !important;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  border-right: none;
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  padding-left: 14px;
+  padding-right: 10px;
+  transition: var(--transition);
+}
+
+.input-group .form-control {
+  border-left: none !important;
+  padding-left: 0;
+}
+
+.input-group:focus-within .input-group-text {
+  border-color: var(--spotify-green);
+  color: var(--spotify-green);
+}
+
+.input-group .btn-outline-secondary {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-left: none;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.input-group .btn-outline-secondary:hover {
+  color: var(--text-main);
+  background-color: var(--bg-raised);
+}
+
+.input-group:focus-within .btn-outline-secondary {
+  border-color: var(--spotify-green);
+}
+
+/* ── Validation ─────────────────────────────────────────── */
+.invalid-feedback {
+  color: var(--error-red);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.invalid-feedback::before {
+  content: "!";
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background-color: var(--error-red);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Cards ──────────────────────────────────────────────── */
+.card {
+  background: rgba(18, 18, 18, 0.80);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: var(--text-main);
+  animation: fadeIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: none;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 0.75rem;
+}
+
+/* ── Checkboxes ─────────────────────────────────────────── */
+.form-check-input {
+  background-color: var(--border-color);
+  border: none;
+  cursor: pointer;
+  width: 18px; height: 18px;
+  transition: var(--transition);
+}
+
+.form-check-input:checked {
+  background-color: var(--spotify-green);
+  border-color: var(--spotify-green);
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 3px var(--spotify-green-subtle);
+}
+
+.form-check-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ── Tables ─────────────────────────────────────────────── */
+.table {
+  color: var(--text-main) !important;
+  border-color: var(--bg-elevated);
+}
+
+.table thead th {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--bg-raised);
+  padding: 10px 16px;
+}
+
+.table tbody td {
+  padding: 12px 16px;
+  font-size: 14px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--bg-elevated);
+}
+
+.table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  color: var(--text-main);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.table tbody tr:hover > * {
+  background-color: var(--bg-hover);
+  color: var(--text-main);
+}
+
+/* ── Misc ───────────────────────────────────────────────── */
+.btn-delete-account {
+  width: 40px;
+  text-align: center;
+  box-sizing: content-box;
+}
+
+hr {
+  border-color: var(--border-subtle);
+  opacity: 1;
+  margin: 32px 0;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 8px; }
+::-webkit-scrollbar-track  { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb  { background: var(--bg-raised); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-color); }

@@ -1,3 +1,4 @@
 import { Component } from '@angular/core';
-@Component({ templateUrl: 'subnav.component.html', standalone: false })
+
+@Component({ standalone: false, templateUrl: 'subnav.component.html' })
 export class SubNavComponent { }

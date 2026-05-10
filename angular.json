@@ -17,19 +17,19 @@
     "build": {
     "builder": "@angular-devkit/build-angular:browser",
     "options": {
-    "outputPath": "dist/angular-15-example",
-    "index": "src/index.html",
-    "main": "src/main.ts",
-    "polyfills": "src/polyfills.ts",
-    "tsConfig": "tsconfig.app.json",
-    "inlineStyleLanguage": "less",
-    "assets": [
-    "src/favicon.ico",
-    "src/assets"
-    ],
-    "styles": [
-        "src/styles.less"
-    ],
+        "outputPath": "dist/angular-15-example",
+        "index": "src/index.html",
+        "main": "src/main.ts",
+        "polyfills": "src/polyfills.ts",
+        "tsConfig": "tsconfig.app.json",
+        "inlineStyleLanguage": "less",
+        "assets": [
+        "src/favicon.ico",
+        "src/assets"
+        ],
+        "styles": [
+            "src/styles.less"
+        ],
 
 
 

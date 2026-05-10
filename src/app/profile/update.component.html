@@ -29,12 +29,9 @@
             </div>
         </div>
     </div>
-        
-
-
     <div class="mb-3">
         <label class="form-label">Email</label>
-        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors}" />
+        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
             <div *ngIf="f.email.errors.required">Email is required</div>
             <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
@@ -46,7 +43,7 @@
         <div class="mb-3 col">
             <label class="form-label">Password</label>
             <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                 <div *ngIf="f.password.errors.required">Password is required</div>
                 <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
             </div>
@@ -60,8 +57,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="mb-3">
         <button type="submit" [disabled]="submitting" class="btn btn-primary me-2">
             <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
