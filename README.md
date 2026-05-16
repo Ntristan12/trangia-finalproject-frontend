@@ -1,5 +1,13 @@
 # Angular 21 Auth Boilerplate (Beginner Guide)
 
+## 🚀 Live Deployment
+
+- **Frontend (Live)**: cuyos-finalproject-frontend.onrender.com
+- **Backend API**: https://cuyos-finalproject-backend.onrender.com
+- **Swagger API Docs**: https://cuyos-finalproject-backend.onrender.com/api-docs
+
+---
+
 This project is a beginner-friendly Angular 21 boilerplate that demonstrates a complete authentication flow:
 
 - Email sign up + email verification
@@ -20,7 +28,8 @@ This project is a beginner-friendly Angular 21 boilerplate that demonstrates a c
 - [5) How authentication works](#5-how-authentication-works)
 - [6) Authorization (roles route guards)](#6-authorization-roles--route-guards)
 - [7) Project structure (quick tour)](#7-project-structure-quick-tour)
-- [8) Troubleshooting](#8-troubleshooting)
+- [8) Deployment (Render)](#8-deployment-render)
+- [9) Troubleshooting](#9-troubleshooting)
 
 ## 1) Prerequisites
 
@@ -47,7 +56,8 @@ npm install
 
 Start an API that implements the `/accounts/` endpoints described in the [How authentication works](#5-how-authentication-works) section.
 
-The frontend expects the API to be available at `http://localhost:4800` by default.
+The frontend expects the API to be available at `http://localhost:4000` by default.
+
 ### Step 3: start Angular
 
 ```bash
@@ -67,7 +77,7 @@ Edit the environment file:
 Update:
 
 ```ts
-apiurl: 'http://localhost:4000'
+apiUrl: 'http://localhost:4000'
 ```
 
 ## 3) Run the app (fake backend, no AΡΙ)
@@ -76,7 +86,7 @@ If you want to run everything fully in the browser (no backend), you can enable 
 
 ### Step 1: enable the fake backend provider
 
-Open   `src/app/app.module.ts` and uncomment the `fakeBackendProvider` line in the `providers` array.
+Open   `src/app/app.module.ts` and ensure the `fakeBackendProvider` line in the `providers` array is present.
 
 
 It should look like this:
@@ -180,19 +190,19 @@ This boilerplate uses two tokens:
 
 The frontend calls these endpoints (base URL is `environment.apiUrl`):
 
-- `POST/accounts/authenticate`
+- `POST /accounts/authenticate`
 - `POST /accounts/refresh-token`
-- `POST/accounts/revoke-token`
-- `POST/accounts/register`
-- `POST/accounts/verify-email`
-- `POST/accounts/forgot-password`
-- `POST/accounts/validate-reset-token`
-- `POST/accounts/reset-password`
+- `POST /accounts/revoke-token`
+- `POST /accounts/register`
+- `POST /accounts/verify-email`
+- `POST /accounts/forgot-password`
+- `POST /accounts/validate-reset-token`
+- `POST /accounts/reset-password`
 - `GET /accounts` (Admin)
 - `GET /accounts/:id`
-- `POST/accounts` (Admin)
-- `PUT/accounts/:id`
-- `DELETE/accounts/:id`
+- `POST /accounts` (Admin)
+- `PUT /accounts/:id`
+- `DELETE /accounts/:id`
 
 ## 6) Authorization (roles + route guards)
 
@@ -223,13 +233,45 @@ Most code lives under `src/app`:
 - `profile/` user profile screens
 - `admin/` admin-only screens for account management
 
-The UI is styled with Bootstrap 5 via a CDN Link in:\
+The UI is styled with Bootstrap 5 via a CDN Link in:
 
 - `src/index.html`
 
-## 8) Troubleshooting
+## 8) Deployment (Render)
 
-### The app redirects ne back to login after refresh
+### Production Build
+
+```bash
+ng build --configuration production
+```
+
+This compiles the app into the `dist/angular-15-example` folder with optimized, minified bundles.
+
+### Deploy as Static Site on Render
+
+1. Create a new **Static Site** on [Render](https://render.com)
+2. Connect your GitHub repository
+3. Set build command: `npm install && npm run build`
+4. Set publish directory: `dist/angular-15-example`
+5. **Important — SPA Rewrite Rule**: Add a rewrite rule:
+   - **Source**: `/*`
+   - **Destination**: `/index.html`
+   - This ensures deep links (like email verification URLs) don't return 404 errors
+
+### Environment Configuration
+
+Update `src/environments/environment.prod.ts` with your deployed backend API URL before building:
+
+```typescript
+export const environment = {
+    production: true,
+    apiUrl: 'https://your-backend-name.onrender.com'
+};
+```
+
+## 9) Troubleshooting
+
+### The app redirects me back to login after refresh
 
 - If you are using a real API, make sure it sets a refresh token cookie and supports    `POST /accounts/refresh-token`.
 - If your API runs on a different origin (different hostname/port), you must configure CORS to allow credentials and ensure cookies are set with the correct `SameSite`/`Secure`
