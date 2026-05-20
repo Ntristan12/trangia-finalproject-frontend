@@ -245,14 +245,14 @@ The UI is styled with Bootstrap 5 via a CDN Link in:
 ng build --configuration production
 ```
 
-This compiles the app into the `dist/angular-15-example` folder with optimized, minified bundles.
+This compiles the app into the `dist/trangia-finalproject-frontend` folder with optimized, minified bundles.
 
 ### Deploy as Static Site on Render
 
 1. Create a new **Static Site** on [Render](https://render.com)
 2. Connect your GitHub repository
 3. Set build command: `npm install && npm run build`
-4. Set publish directory: `dist/angular-15-example`
+4. Set publish directory: `dist/trangia-finalproject-frontend`
 5. **Important — SPA Rewrite Rule**: Add a rewrite rule:
    - **Source**: `/*`
    - **Destination**: `/index.html`
@@ -265,7 +265,7 @@ Update `src/environments/environment.prod.ts` with your deployed backend API URL
 ```typescript
 export const environment = {
     production: true,
-    apiUrl: 'https://your-backend-name.onrender.com'
+    apiUrl: 'https://trangia-finalproject-backend.onrender.com'
 };
 ```
 
