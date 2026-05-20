@@ -1,6 +1,17 @@
 <div class="p-4">
     <div class="container">
-        <h1>Hi {{account?.firstName}}!</h1>
-        <p>You're logged in with Angular 15 & JWT!!</p>
+        <div class="card p-5 mb-4 shadow-sm border-0 position-relative overflow-hidden dashboard-welcome">
+            <h1 class="display-5 fw-bold text-white mb-2">Welcome back, {{account?.firstName}}!</h1>
+            <p class="lead text-secondary-soft fs-5">You are securely logged into your account dashboard. Manage your profile, roles, and administrative settings.</p>
+            <hr class="my-4 border-light opacity-10" style="border-color: rgba(255, 255, 255, 0.1) !important;">
+            <div class="d-flex gap-3 flex-wrap">
+                <a routerLink="/profile" class="btn btn-purple px-4 py-3 text-white">
+                    View Profile
+                </a>
+                <a *ngIf="account?.role === 'Admin'" routerLink="/admin" class="btn btn-outline-navy px-4 py-3">
+                    Admin Panel
+                </a>
+            </div>
+        </div>
     </div>
 </div>

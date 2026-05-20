@@ -1,6 +1,34 @@
-<h1>My Profile</h1>
-<p *ngIf="account">
-    <strong>Name: </strong> {{account.title}} {{account.firstName}} {{account.lastName}}<br />
-    <strong>Email: </strong> {{account.email}}
-</p>
-<p><a routerLink="update">Update Profile</a></p>
+<div class="card max-w-md mx-auto my-4 shadow-lg border-0" *ngIf="account">
+    <div class="card-body p-4 p-md-5">
+        <div class="d-flex align-items-center mb-4">
+            <div class="profile-avatar me-4">
+                {{account.firstName ? account.firstName.charAt(0) : ''}}{{account.lastName ? account.lastName.charAt(0) : ''}}
+            </div>
+            <div>
+                <h2 class="auth-title text-start mb-1">{{account.title}} {{account.firstName}} {{account.lastName}}</h2>
+                <p class="text-light-soft mb-0">{{account.role}} Account</p>
+            </div>
+        </div>
+        
+        <div class="profile-details-list">
+            <div class="profile-detail-item mb-3 pb-3 border-bottom border-light border-opacity-10" style="border-color: rgba(255, 255, 255, 0.05) !important;">
+                <div class="detail-label text-muted fs-6 mb-1">Email Address</div>
+                <div class="detail-value text-white fw-semibold fs-5">{{account.email}}</div>
+            </div>
+            <div class="profile-detail-item mb-3 pb-3 border-bottom border-light border-opacity-10" style="border-color: rgba(255, 255, 255, 0.05) !important;">
+                <div class="detail-label text-muted fs-6 mb-1">Role Type</div>
+                <div class="detail-value text-white fw-semibold fs-5">
+                    <span class="badge bg-purple-soft text-purple-light px-3 py-2 fs-6 rounded-pill">
+                        {{account.role}}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 pt-2">
+            <a routerLink="update" class="btn btn-auth-primary w-100 d-flex align-items-center justify-content-center">
+                Update Profile
+            </a>
+        </div>
+    </div>
+</div>

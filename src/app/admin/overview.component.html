@@ -1,7 +1,15 @@
-<div class="p-4">
-    <div class="container">
-        <h1>Admin</h1>
-        <p>This section can only be accessed by administrators.</p>
-        <p><a routerLink="accounts">Manage Accounts</a></p>
+<div class="card shadow-lg border-0 max-w-2xl mx-auto my-4">
+    <div class="card-body p-4 p-md-5 text-center d-flex flex-column align-items-center">
+        <div class="admin-icon-wrapper mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-shield-lock" viewBox="0 0 16 16">
+                <path d="M5.338 1.59a61 61 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.155.718 7.34 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.033.294-.118c.24-.113.546-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.847 2.798-5.033 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM8 0c.652 0 1.78.23 2.92.547 1.137.315 2.257.662 2.9.874a1.54 1.54 0 0 1 1.058 1.258c.626 4.693-.9 8.302-2.73 10.513a12.5 12.5 0 0 1-2.637 2.43 3.9 3.9 0 0 1-1.113.626 1 1 0 0 1-.798 0 3.9 3.9 0 0 1-1.113-.626 12.5 12.5 0 0 1-2.637-2.43C1.9 10.902.373 7.293.998 2.6a1.54 1.54 0 0 1 1.058-1.258C2.693.877 3.812.53 4.951.215 6.09.23 7.22 0 8 0"/>
+                <path d="M9.5 8.5a1.5 1.5 0 0 1-1 1.415V11a.5.5 0 0 1-1 0V9.915A1.5 1.5 0 1 1 9.5 8.5"/>
+            </svg>
+        </div>
+        <h2 class="auth-title text-center mb-2">Admin Panel</h2>
+        <p class="auth-subtitle text-center mb-4">This section is restricted to administrators. Use the link below to view and manage registered accounts.</p>
+        <a routerLink="accounts" class="btn btn-auth-primary max-w-xs d-flex align-items-center justify-content-center">
+            Manage Accounts
+        </a>
     </div>
 </div>

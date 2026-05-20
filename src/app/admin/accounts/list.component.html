@@ -1,32 +1,64 @@
-<h1>Accounts</h1>
-<p>All accounts from secure (admin only) api end point:</p>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Create Account</a>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width:30%">Name</th>
-            <th style="width:30%">Email</th>
-            <th style="width:30%">Role</th>
-            <th style="width:10%"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let account of accounts">
-            <td class="align-middle">{{account.title}} {{account.firstName}} {{account.lastName}}</td>
-            <td class="align-middle">{{account.email}}</td>
-            <td class="align-middle">{{account.role}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{account.id}}" class="btn btn-sm btn-primary me-1">Edit</a>
-                <button (click)="deleteAccount(account.id)" class="btn btn-sm btn-danger btn-delete-account" [disabled]="account.isDeleting">
-                    <span *ngIf="account.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!account.isDeleting">Delete</span>
-                </button>
-            </td>
-        </tr>
-        <tr *ngIf="!accounts">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="card shadow-lg border-0 mb-4">
+    <div class="card-body p-4 p-md-5">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+            <div>
+                <h2 class="auth-title text-start mb-1">Accounts Management</h2>
+                <p class="auth-subtitle text-start mb-0">Secure list of all user accounts on the system.</p>
+            </div>
+            <div>
+                <a routerLink="add" class="btn btn-auth-primary d-inline-flex align-items-center gap-2 px-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                    </svg>
+                    Create Account
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th style="width:35%">Name</th>
+                        <th style="width:30%">Email Address</th>
+                        <th style="width:15%">System Role</th>
+                        <th style="width:20%" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let account of accounts">
+                        <td class="align-middle py-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="avatar-sm">
+                                    {{account.firstName ? account.firstName.charAt(0) : ''}}{{account.lastName ? account.lastName.charAt(0) : ''}}
+                                </div>
+                                <span class="text-white fw-semibold">{{account.title}} {{account.firstName}} {{account.lastName}}</span>
+                            </div>
+                        </td>
+                        <td class="align-middle py-3 text-secondary-soft">{{account.email}}</td>
+                        <td class="align-middle py-3">
+                            <span [ngClass]="{
+                                'bg-purple-soft text-purple-light': account.role === 'Admin',
+                                'bg-navy-light text-secondary-soft': account.role !== 'Admin'
+                            }" class="badge px-3 py-2 rounded-pill">
+                                {{account.role}}
+                            </span>
+                        </td>
+                        <td class="align-middle py-3 text-end">
+                            <a routerLink="edit/{{account.id}}" class="btn btn-outline-navy-sm me-2">Edit</a>
+                            <button (click)="deleteAccount(account.id)" class="btn btn-outline-danger-sm btn-delete-account" [disabled]="account.isDeleting">
+                                <span *ngIf="account.isDeleting" class="spinner-border spinner-border-sm me-1"></span>
+                                <span *ngIf="!account.isDeleting">Delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!accounts">
+                        <td colspan="4" class="text-center py-5">
+                            <span class="spinner-border spinner-border-lg text-purple-light"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
