@@ -2,9 +2,9 @@
 
 ## 🚀 Live Deployment
 
-- **Frontend (Live)**: cuyos-finalproject-frontend.onrender.com
-- **Backend API**: https://cuyos-finalproject-backend.onrender.com
-- **Swagger API Docs**: https://cuyos-finalproject-backend.onrender.com/api-docs
+- **Frontend (Live)**: https://trangia-finalproject-frontend.onrender.com
+- **Backend API**: https://trangia-finalproject-backend.onrender.com
+- **Swagger API Docs**: https://trangia-finalproject-backend.onrender.com/api-docs
 
 ---
 
