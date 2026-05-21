@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
 
@@ -37,9 +36,17 @@ export class ResetPasswordComponent implements OnInit {
             validator: MustMatch('password', 'confirmPassword')
         });
 
+        // FIX: Save the token BEFORE navigating (navigation clears queryParams)
         const token = this.route.snapshot.queryParams['token'];
 
-        // remove token from url to prevent http referer leakage
+        // FIX: If no token in URL, mark immediately as invalid — don't call the API
+        if (!token) {
+            this.tokenStatus = TokenStatus.Invalid;
+            return;
+        }
+
+        // Remove token from URL to prevent HTTP referer leakage
+        // FIX: navigate AFTER saving token, and token variable is already captured above
         this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
 
         this.accountService.validateResetToken(token)
@@ -55,22 +62,16 @@ export class ResetPasswordComponent implements OnInit {
             });
     }
 
-    // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
     onSubmit() {
         this.submitted = true;
-
-        // reset alerts on submit
         this.alertService.clear();
 
-        // stop here if form is invalid
-        if (this.form.invalid) {
-            return;
-        }
+        if (this.form.invalid) return;
 
         this.loading = true;
-        this.accountService.resetPassword(this.token!, this.f.password.value, this.f.confirmPassword.value)
+        this.accountService.resetPassword(this.token!, this.f['password'].value, this.f['confirmPassword'].value)
             .pipe(first())
             .subscribe({
                 next: () => {
