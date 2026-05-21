@@ -1,4 +1,4 @@
-export const environment = {
+export const environment =   {
     production: true,
-    apiUrl: 'https://trangia-final-backend.onrender.com'
+    apiUrl: 'https://tranga-final-backend.onrender.com'
 };
