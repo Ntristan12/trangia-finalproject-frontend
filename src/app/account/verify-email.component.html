@@ -1,10 +1,9 @@
-﻿<h2 class="auth-title">Verify Email</h2>
-
-<div *ngIf="emailStatus == EmailStatus.Verifying" class="text-center my-4">
-    <span class="spinner-border spinner-border-sm me-2 text-purple-light"></span>
-    <span class="text-light-soft">Verifying your email, please wait...</span>
-</div>
-
-<div *ngIf="emailStatus == EmailStatus.Failed" class="alert alert-danger mt-4">
-    Verification failed. You can also verify your account using the <a routerLink="forgot-password" class="alert-link text-white fw-bold">Forgot Password</a> page.
+<h3 class="card-header">Verify Email</h3>
+<div class="card-body">
+    <div *ngif="emailStatus == EmailStatus.verifying">
+        Verifying...
+    </div>
+    <div *ngif="emailStatus == EmailStatus.Failed">
+        Verification Failed, you can also verify your account using the <a routerLink="forgot-password">forgot password</a>
+    </div>
 </div>

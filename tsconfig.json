@@ -1,8 +1,9 @@
-/* To learn more about this file see https://angular.io/config/tsconfig. */
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "rootDir": "./src",
     "outDir": "./dist/out-tsc",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -13,7 +14,6 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
@@ -26,18 +26,13 @@
     "paths": {
       "@app/*": ["src/app/*"],
       "@environments/*": ["src/environments/*"]
-    }
-    
     },
-    "angularCompilerOptions": {
-        "enableI18nLegacyMessageIdFormat": false,
-        "strictInjectionParameters": true,
-        "strictInputAccessModifiers": true,
-        "strictTemplates": true
-    }
+    "ignoreDeprecations": "5.0"
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
-    
-
-    
-
-    
+}

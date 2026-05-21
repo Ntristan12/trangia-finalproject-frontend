@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService } from '@app/_services';
 
-@Component({ standalone: false, templateUrl: 'login.component.html' })
+@Component({ templateUrl: 'login.component.html', standalone: false })
 export class LoginComponent implements OnInit {
     form!: FormGroup;
     submitting = false;
-    submitted = false;
+    submitted = false;  
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private accountService: AccountService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private cdr: ChangeDetectorRef
     ) { }
 
     ngOnInit() {
@@ -31,27 +32,30 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
+        this.cdr.detectChanges();
 
-        // reset alerts on submit
         this.alertService.clear();
-
-        // stop here if form is invalid
+        
         if (this.form.invalid) {
             return;
         }
-
+        
         this.submitting = true;
+        this.cdr.detectChanges();
+
         this.accountService.login(this.f.email.value, this.f.password.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    // get return url from query parameters or default to home page
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                     this.router.navigateByUrl(returnUrl);
                 },
                 error: error => {
-                    this.alertService.error(error);
-                    this.submitting = false;
+                    setTimeout(() => {
+                        this.alertService.error(error);
+                        this.submitting = false;
+                        this.cdr.detectChanges();
+                    });
                 }
             });
     }

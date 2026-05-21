@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
 
-@Component({ standalone: false, templateUrl: 'register.component.html' })
+@Component({ templateUrl: 'register.component.html', standalone: false })
 export class RegisterComponent implements OnInit {
     form!: FormGroup;
     submitting = false;
@@ -34,9 +34,9 @@ export class RegisterComponent implements OnInit {
         });
     }
 
-    // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
+    
     onSubmit() {
         this.submitted = true;
 

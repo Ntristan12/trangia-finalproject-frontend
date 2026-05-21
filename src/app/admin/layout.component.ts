@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-@Component({ standalone: false, templateUrl: 'layout.component.html' })
+@Component({ selector: 'app-admin-layout', templateUrl: 'layout.component.html', standalone: false })
 export class LayoutComponent { }

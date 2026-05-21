@@ -19,4 +19,4 @@ import { OverviewComponent } from './overview.component';
         OverviewComponent
     ]
 })
-export class AdminModule { }
+export class AdminModule { }    

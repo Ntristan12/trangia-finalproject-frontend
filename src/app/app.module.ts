@@ -30,10 +30,8 @@ import { HomeComponent } from './home';
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        
 
-        // provider used to create fake backend
-        (environment.production ? [] : [fakeBackendProvider])
+        ...(environment.production ? [] : [fakeBackendProvider])
     ],
     bootstrap: [AppComponent]
 })

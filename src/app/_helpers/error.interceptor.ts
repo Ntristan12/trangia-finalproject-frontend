@@ -11,20 +11,14 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
-            const isRefreshTokenRequest = request.url.includes('/refresh-token');
-
-            if ([401, 403].includes(err.status) && this.accountService.accountValue && !isRefreshTokenRequest) {
+            if([401, 403].includes(err.status) && this.accountService.accountValue) {
+                // auto logout if 401 or 403 response return from api
                 this.accountService.logout();
             }
 
             const error = (err && err.error && err.error.message) || err.statusText;
-
-            // avoid logging startup refresh-token 401 when the user is not logged in
-            if (!(err.status === 401 && request.url.endsWith('/accounts/refresh-token') && !this.accountService.accountValue)) {
-                console.error(err);
-            }
-
+            console.error(err);
             return throwError(() => error);
-        }));
+        }))
     }
 }

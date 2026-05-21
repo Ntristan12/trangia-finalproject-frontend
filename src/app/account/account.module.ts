@@ -11,18 +11,18 @@ import { ForgotPasswordComponent } from './forgot-password.component';
 import { ResetPasswordComponent } from './reset-password.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        AccountRoutingModule
-    ],
-    declarations: [
-        LayoutComponent,
-        LoginComponent,
-        RegisterComponent,
-        VerifyEmailComponent,
-        ForgotPasswordComponent,
-        ResetPasswordComponent
-    ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    AccountRoutingModule
+  ],
+  declarations: [
+    LayoutComponent,
+    LoginComponent,
+    RegisterComponent,
+    VerifyEmailComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
+  ]
 })
 export class AccountModule { }

@@ -1,136 +1,32 @@
-﻿<h2 class="auth-title">Welcome Back</h2>
-
-<p class="auth-subtitle">
-    Login to continue
-</p>
-
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-
-    <!-- EMAIL -->
-    <div class="mb-4">
-
-        <label class="form-label">
-            Email
-        </label>
-
-        <input
-            type="email"
-            autocomplete="email"
-            formControlName="email"
-            class="form-control"
-            placeholder="Enter your email"
-            [ngClass]="{
-                'is-invalid': submitted && f.email.errors
-            }"
-        />
-
-        <div
-            *ngIf="submitted && f.email.errors"
-            class="invalid-feedback"
-        >
-
-            <div *ngIf="f.email.errors.required">
-                Email is required
+<h3 class="card-header">Login</h3>
+<div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+                <div *ngIf="f.email.errors.email">Email is invalid</div>
             </div>
-
-            <div *ngIf="f.email.errors.email">
-                Invalid email format
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
             </div>
-
         </div>
-
-    </div>
-
-    <!-- PASSWORD -->
-    <div class="mb-3">
-
-        <label class="form-label">
-            Password
-        </label>
-
-        <input
-            type="password"
-            autocomplete="current-password"
-            formControlName="password"
-            class="form-control"
-            placeholder="Enter your password"
-            [ngClass]="{
-                'is-invalid': submitted && f.password.errors
-            }"
-        />
-
-        <div
-            *ngIf="submitted && f.password.errors"
-            class="invalid-feedback"
-        >
-
-            <div *ngIf="f.password.errors.required">
-                Password is required
+        <div class="row">
+            <div class="mb-3 col">
+                <button [disabled]="submitting" class="btn btn-primary">
+                    <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+                    Login
+                </button>
+                <a routerLink="../register" class="btn btn-link">Register</a>
             </div>
-
+            <div class="mb-3 col text-end">
+                <a routerLink="../forgot-password" class="btn btn-link pe-0">Forgot Password?</a>
+            </div>
         </div>
-
-    </div>
-
-    <!-- OPTIONS -->
-    <div class="auth-options">
-
-        <div class="form-check">
-
-            <input
-                class="form-check-input"
-                type="checkbox"
-                id="remember"
-            />
-
-            <label
-                class="form-check-label"
-                for="remember"
-            >
-                Remember me
-            </label>
-
-        </div>
-
-        <a
-            routerLink="../forgot-password"
-            class="auth-link"
-        >
-            Forgot Password?
-        </a>
-
-    </div>
-
-    <!-- LOGIN BUTTON -->
-    <button
-        [disabled]="submitting"
-        class="btn btn-auth-primary w-100 mt-4"
-    >
-
-        <span
-            *ngIf="submitting"
-            class="spinner-border spinner-border-sm me-2"
-        >
-        </span>
-
-        LOGIN
-
-    </button>
-
-    <!-- REGISTER -->
-    <div class="text-center mt-4">
-
-        <span class="text-light-soft">
-            Don't have an account?
-        </span>
-
-        <a
-            routerLink="../register"
-            class="auth-link ms-2"
-        >
-            Register
-        </a>
-
-    </div>
-
-</form>
+    </form>
+</div>

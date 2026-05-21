@@ -1,4 +1,4 @@
 import { Component } from '@angular/core';
 
-@Component({ standalone: false, templateUrl: 'overview.component.html' })
+@Component({ templateUrl: 'overview.component.html', standalone: false })
 export class OverviewComponent { }

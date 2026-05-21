@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
 
@@ -11,7 +12,7 @@ enum TokenStatus {
     Invalid
 }
 
-@Component({ standalone: false, templateUrl: 'reset-password.component.html' })
+@Component({ templateUrl: 'reset-password.component.html', standalone: false })
 export class ResetPasswordComponent implements OnInit {
     TokenStatus = TokenStatus;
     tokenStatus = TokenStatus.Validating;
@@ -25,7 +26,8 @@ export class ResetPasswordComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private accountService: AccountService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private cd: ChangeDetectorRef
     ) { }
 
     ngOnInit() {
@@ -36,42 +38,51 @@ export class ResetPasswordComponent implements OnInit {
             validator: MustMatch('password', 'confirmPassword')
         });
 
-        // FIX: Save the token BEFORE navigating (navigation clears queryParams)
         const token = this.route.snapshot.queryParams['token'];
 
-        // FIX: If no token in URL, mark immediately as invalid — don't call the API
+        // remove token from url to prevent http referer leakage
+        this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
+
         if (!token) {
-            this.tokenStatus = TokenStatus.Invalid;
+            // console.log('No reset token found.'); // Debug: no token in URL.
+            this.tokenStatus = TokenStatus.Invalid; // Shows invalid token message if no token is found.
             return;
         }
 
-        // Remove token from URL to prevent HTTP referer leakage
-        // FIX: navigate AFTER saving token, and token variable is already captured above
-        this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
-
+        // Validate the reset token before showing the reset password form.
         this.accountService.validateResetToken(token)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.token = token;
-                    this.tokenStatus = TokenStatus.Valid;
+                    // console.log('Reset token is valid.'); // Debug: token validation passed.
+                    this.token = token; 
+                    this.tokenStatus = TokenStatus.Valid; // Show the reset password form.
+
+                     this.cd.detectChanges(); // Force Angular to update the HTML view.
                 },
-                error: () => {
+                error: ()=> {
+                    //  console.log('Reset token validation error:', error); // Log the validation error for debugging.
                     this.tokenStatus = TokenStatus.Invalid;
                 }
             });
     }
 
+    // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
-
+    
     onSubmit() {
         this.submitted = true;
+
+        // reset alerts on submit
         this.alertService.clear();
 
-        if (this.form.invalid) return;
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
 
         this.loading = true;
-        this.accountService.resetPassword(this.token!, this.f['password'].value, this.f['confirmPassword'].value)
+        this.accountService.resetPassword(this.token!, this.f.password.value, this.f.confirmPassword.value)
             .pipe(first())
             .subscribe({
                 next: () => {
