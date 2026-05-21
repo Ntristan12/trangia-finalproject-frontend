@@ -1,8 +1,8 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, finalize } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { map, finalize, catchError } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 import { Account } from '@app/_models';
@@ -45,11 +45,19 @@ export class AccountService {
 
     refreshToken(): Observable<Account> {
         return this.http.post<Account>(`${baseUrl}/refresh-token`, {}, { withCredentials: true })
-            .pipe(map((account: Account) => {
-                this.accountSubject.next(account);
-                this.startRefreshTokenTimer();
-                return account;
-            }));
+            .pipe(
+                map((account: Account) => {
+                    this.accountSubject.next(account);
+                    this.startRefreshTokenTimer();
+                    return account;
+                }),
+                catchError((err) => {
+                    // Refresh token is invalid/expired — clear state
+                    this.stopRefreshTokenTimer();
+                    this.accountSubject.next(null);
+                    return throwError(() => err);
+                })
+            );
     }
 
     register(account: Account): Observable<any> {
@@ -106,23 +114,17 @@ export class AccountService {
 
     private startRefreshTokenTimer(): void {
         const jwtToken = this.accountValue?.jwtToken;
-        if (!jwtToken) {
-            return;
-        }
+        if (!jwtToken) return;
 
         const base64Url = jwtToken.split('.')[1];
-        if (!base64Url) {
-            return;
-        }
+        if (!base64Url) return;
 
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         const parsedToken = JSON.parse(atob(base64));
         const expires = new Date(parsedToken.exp * 1000);
         const timeout = expires.getTime() - Date.now() - 60_000;
 
-        if (timeout <= 0) {
-            return;
-        }
+        if (timeout <= 0) return;
 
         this.stopRefreshTokenTimer();
         this.refreshTokenTimeout = window.setTimeout(() => this.refreshToken().subscribe(), timeout);
