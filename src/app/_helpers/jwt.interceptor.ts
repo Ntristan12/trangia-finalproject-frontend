@@ -25,10 +25,19 @@ export class JwtInterceptor implements HttpInterceptor {
 
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
-                // If 401 and NOT the refresh-token call itself, try to refresh
-                if (error.status === 401 && !request.url.includes('refresh-token')) {
+                // Only handle 401 if:
+                // 1. It is a 401 error
+                // 2. It is NOT the refresh-token call itself (avoids infinite loop)
+                // 3. The user was actually logged in (avoids breaking public pages like reset-password)
+                const isRefreshUrl = request.url.includes('refresh-token');
+                const userIsLoggedIn = !!this.accountService.accountValue;
+
+                if (error.status === 401 && !isRefreshUrl && userIsLoggedIn) {
                     return this.handle401Error(request, next);
                 }
+
+                // For public pages (reset-password, verify-email, etc.)
+                // just pass the error through without redirecting
                 return throwError(() => error);
             })
         );
@@ -47,15 +56,17 @@ export class JwtInterceptor implements HttpInterceptor {
                     return next.handle(this.addToken(request, account.jwtToken));
                 }),
                 catchError((err) => {
-                    // Refresh failed — log out and redirect to login
+                    // Refresh failed — only logout if user was logged in
                     this.isRefreshing = false;
-                    this.accountService.logout();
+                    if (this.accountService.accountValue) {
+                        this.accountService.logout();
+                    }
                     return throwError(() => err);
                 })
             );
         }
 
-        // If already refreshing, queue other requests until new token arrives
+        // Queue other requests until the new token arrives
         return this.refreshTokenSubject.pipe(
             filter(token => token !== null),
             take(1),
